@@ -31,6 +31,20 @@
     }).then((token) => {
         console.log('getToken: ', token);
     });
+
+    fcm.onMessage((data) => {
+        console.log('onMessage: ', data);
+        Notification.requestPermission((status) => {
+            if(status === 'granted') {
+                let title = data['data']['title'];
+                let body = data['data']['body'];
+                new Notification(title, {
+                    body: body
+                })
+            }
+        });
+    });
+
     </script>
 </body>
 </html>
